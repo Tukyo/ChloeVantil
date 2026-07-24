@@ -1,25 +1,52 @@
-main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
+/* #region ROOT */
 *,
 *::before,
 *::after {
     box-sizing: border-box;
 }
 
+main {
+    display: flex;
+    flex-direction: column;
+}
+
 body {
     margin: 0;
     padding-top: 145px;
-    /* clears the fixed header at its tallest (expanded) size */
 }
 
 section {
     padding-top: 5rem;
 }
 
+h1 {
+    color: #e7835b;
+    font-weight: 500;
+    font-size: clamp(3.25rem, 9vw, 4rem);
+}
+
+h2 {
+    display: flex;
+    justify-content: center;
+    font-family: 'Work Sans', sans-serif;
+    color: #2f4f4f;
+    font-weight: 500;
+    margin-bottom: 2rem;
+}
+
+h3 {
+    font-family: 'Source Sans 3', arial, sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+p {
+    font-family: 'Source Sans 3', arial, sans-serif;
+}
+
+/* #endregion */
+
+/* #region HEADER */
 site-header {
     position: fixed;
     top: 0;
@@ -53,6 +80,9 @@ site-header.scrolled img {
     height: 50px;
 }
 
+/* #endregion */
+
+/* #region FOOTER */
 footer {
     display: flex;
     flex-direction: column;
@@ -63,8 +93,12 @@ footer {
     margin-bottom: 1rem;
 }
 
+#copyright_content {
+    white-space: nowrap;
+    font-size: clamp(0.75rem, 2.6vw, 1rem);
+}
+
 #powered_by_container {
-    display: flex;
     align-items: center;
     gap: 0.5rem;
     margin-top: 1rem;
@@ -82,7 +116,121 @@ footer {
     width: auto;
 }
 
-/* ===== Resume preview + lightbox (resume page) ===== */
+/* #endregion */
+
+/* #region SIDEBAR */
+site-sidebar.open .sidebar_backdrop {
+    opacity: 1;
+    visibility: visible;
+}
+
+site-sidebar.open .sidebar_panel {
+    transform: translateX(0);
+}
+
+.sidebar_backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.sidebar_panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 450px;
+    max-width: 85vw;
+    height: 100%;
+    padding: 3rem 1.5rem 2rem;
+    background: #fff;
+    box-shadow: 2px 0 16px rgba(0, 0, 0, 0.15);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.sidebar_home,
+.sidebar_menu a {
+    text-decoration: none;
+    font-family: 'Work Sans', sans-serif;
+    transition: color 0.15s ease;
+}
+
+.sidebar_home {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1b1b1b;
+    margin-bottom: 2rem;
+}
+
+.sidebar_heading {
+    margin: 0 0 1rem;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2f4f4f;
+}
+
+.sidebar_menu {
+    list-style: none;
+    margin: 0;
+    padding-left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sidebar_menu a {
+    color: #54595c;
+    font-size: 1.15rem;
+}
+
+.sidebar_home:hover,
+.sidebar_menu a:hover {
+    color: #e7835b;
+}
+
+.nav_toggle {
+    position: absolute;
+    left: 5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.nav_toggle span {
+    display: block;
+    width: 28px;
+    height: 3px;
+    background-color: #2f4f4f;
+    border-radius: 2px;
+}
+
+.nav_toggle:focus,
+.nav_toggle:focus-visible {
+    outline: none;
+}
+
+.nav_toggle::-moz-focus-inner {
+    border: 0;
+}
+
+/* #endregion */
+
+/* #region RESUME */
 #resume_content {
     display: flex;
     justify-content: center;
@@ -139,162 +287,9 @@ footer {
     transform: scale(1);
 }
 
-/* ===== Sidebar (left slide-out drawer) ===== */
-.sidebar_backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 900;
-    background: rgba(0, 0, 0, 0.4);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
+/* #endregion */
 
-.sidebar_panel {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    width: 450px;
-    max-width: 85vw;
-    height: 100%;
-    padding: 2rem 1.5rem;
-    background: #fff;
-    box-shadow: 2px 0 16px rgba(0, 0, 0, 0.15);
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-}
-
-site-sidebar.open .sidebar_backdrop {
-    opacity: 1;
-    visibility: visible;
-}
-
-site-sidebar.open .sidebar_panel {
-    transform: translateX(0);
-}
-
-/* Sidebar nav content */
-.sidebar_panel {
-    padding-top: 3rem;
-}
-
-.sidebar_home,
-.sidebar_menu a {
-    text-decoration: none;
-    font-family: 'Work Sans', sans-serif;
-    transition: color 0.15s ease;
-}
-
-.sidebar_home {
-    display: block;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #1b1b1b;
-    margin-bottom: 2rem;
-}
-
-.sidebar_heading {
-    margin: 0 0 1rem;
-    font-family: 'Work Sans', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #2f4f4f;
-}
-
-.sidebar_menu {
-    list-style: none;
-    margin: 0;
-    padding-left: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.sidebar_menu a {
-    color: #54595c;
-    font-size: 1.15rem;
-}
-
-.sidebar_home:hover,
-.sidebar_menu a:hover {
-    color: #e7835b;
-}
-
-/* Hamburger — pinned left; absolute so the centered logo ignores it. No logic yet. */
-.nav_toggle {
-    position: absolute;
-    left: 5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 6px;
-    padding: 8px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.nav_toggle span {
-    display: block;
-    width: 28px;
-    height: 3px;
-    background-color: #2f4f4f;
-    border-radius: 2px;
-}
-
-/* Kill every focus/tap outline the browser might draw on the hamburger */
-.nav_toggle:focus,
-.nav_toggle:focus-visible {
-    outline: none;
-}
-
-.nav_toggle::-moz-focus-inner {
-    border: 0;
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    max-width: 1200px;
-    margin-inline: auto;
-    padding-inline: 1rem;
-}
-
-#intro_container {
-    max-width: 725px;
-}
-
-#intro_content p {
-    color: #54595c;
-    font-size: 18px;
-    line-height: 1.8;
-}
-
-#hero_container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 1rem;
-}
-
-#hero_content h1 {
-    margin-bottom: 0px;
-}
-
-#subhero_content {
-    font-size: 36px;
-}
-
-#tagline {
-    margin: 0px;
-    color: #1b1b1b;
-    font-weight: 300;
-}
-
+/* #region WORKS */
 .works {
     display: flex;
     flex-direction: column;
@@ -357,9 +352,29 @@ a.work_button:focus-visible {
     border: 0;
 }
 
+/* #endregion */
+
+/* #region CONTENT */
+.container {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 1rem;
+}
+
 .row {
     flex-direction: row;
     gap: 2rem;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.work_sans {
+    font-family: 'Work Sans', sans-serif;
 }
 
 .reel_column {
@@ -383,49 +398,44 @@ a.work_button:focus-visible {
     color: #5e5e5e;
 }
 
-.center {
-    display: flex;
+#intro_container {
+    max-width: 725px;
+}
+
+#intro_content p {
+    color: #54595c;
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+#hero_container {
     justify-content: center;
+    gap: 1rem;
 }
 
-h1 {
-    color: #e7835b;
-    font-weight: 500;
-    font-size: 64px;
+#hero_content h1 {
+    margin-bottom: 0px;
 }
 
-h2 {
-    display: flex;
-    justify-content: center;
-    font-family: 'Work Sans', sans-serif;
-    color: #2f4f4f;
-    font-weight: 500;
-    margin-bottom: 2rem;
-}
-
-h3 {
+#subhero_content {
     font-family: 'Source Sans 3', arial, sans-serif;
-    font-weight: 600;
-    font-size: 20px;
+    font-size: clamp(1.375rem, 5vw, 2.25rem);
 }
 
-.work_sans {
-    font-family: 'Work Sans', sans-serif;
-}
-
-.source_sans {
-    font-family: 'Source Sans 3', arial, sans-serif;
-}
-
-p {
-    font-family: 'Source Sans 3', arial, sans-serif;
+#tagline {
+    margin: 0px;
+    color: #1b1b1b;
+    font-weight: 300;
 }
 
 #wonder_woman_redesigns_container p {
     align-self: center;
-    max-width: 50%;
+    max-width: clamp(20rem, 60vw, 37.5rem);
 }
 
+/* #endregion */
+
+/* #region RESPONSIVENESS */
 @media (min-width: 720px) {
     .work {
         display: grid;
@@ -438,3 +448,19 @@ p {
         order: 2;
     }
 }
+
+@media (max-width: 719px) {
+    .row:has(.reel_column) {
+        flex-direction: column;
+    }
+
+    .sidebar_panel {
+        width: 300px
+    }
+
+    .nav_toggle {
+        left: 2rem;
+    }
+}
+
+/* #endregion */
