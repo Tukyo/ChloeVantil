@@ -1,0 +1,440 @@
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding-top: 145px;
+    /* clears the fixed header at its tallest (expanded) size */
+}
+
+section {
+    padding-top: 5rem;
+}
+
+site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    /* expanded — at top of page */
+    background-color: #fff;
+    border-bottom: 1px solid #ececec;
+    transition: padding 0.3s ease, box-shadow 0.3s ease;
+}
+
+site-header img {
+    display: block;
+    height: 80px;
+    /* expanded logo */
+    width: auto;
+    transition: height 0.3s ease;
+}
+
+site-header.scrolled {
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+site-header.scrolled img {
+    height: 50px;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    padding: 5rem;
+}
+
+#social_media_container {
+    margin-bottom: 1rem;
+}
+
+#powered_by_container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+#powered_by_content {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.9rem;
+    color: #5e5e5e;
+}
+
+#powered_by_logo {
+    content: url("assets/img/Tukyo_Logo.png");
+    height: 20px;
+    width: auto;
+}
+
+/* ===== Resume preview + lightbox (resume page) ===== */
+#resume_content {
+    display: flex;
+    justify-content: center;
+}
+
+#resume_content img {
+    max-width: 400px;
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#resume_content img:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.resume_lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    cursor: pointer;
+}
+
+.resume_lightbox.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.resume_lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+    transform: scale(0.97);
+    transition: transform 0.3s ease;
+}
+
+.resume_lightbox.open img {
+    transform: scale(1);
+}
+
+/* ===== Sidebar (left slide-out drawer) ===== */
+.sidebar_backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.sidebar_panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 450px;
+    max-width: 85vw;
+    height: 100%;
+    padding: 2rem 1.5rem;
+    background: #fff;
+    box-shadow: 2px 0 16px rgba(0, 0, 0, 0.15);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+site-sidebar.open .sidebar_backdrop {
+    opacity: 1;
+    visibility: visible;
+}
+
+site-sidebar.open .sidebar_panel {
+    transform: translateX(0);
+}
+
+/* Sidebar nav content */
+.sidebar_panel {
+    padding-top: 3rem;
+}
+
+.sidebar_home,
+.sidebar_menu a {
+    text-decoration: none;
+    font-family: 'Work Sans', sans-serif;
+    transition: color 0.15s ease;
+}
+
+.sidebar_home {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1b1b1b;
+    margin-bottom: 2rem;
+}
+
+.sidebar_heading {
+    margin: 0 0 1rem;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2f4f4f;
+}
+
+.sidebar_menu {
+    list-style: none;
+    margin: 0;
+    padding-left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sidebar_menu a {
+    color: #54595c;
+    font-size: 1.15rem;
+}
+
+.sidebar_home:hover,
+.sidebar_menu a:hover {
+    color: #e7835b;
+}
+
+/* Hamburger — pinned left; absolute so the centered logo ignores it. No logic yet. */
+.nav_toggle {
+    position: absolute;
+    left: 5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.nav_toggle span {
+    display: block;
+    width: 28px;
+    height: 3px;
+    background-color: #2f4f4f;
+    border-radius: 2px;
+}
+
+/* Kill every focus/tap outline the browser might draw on the hamburger */
+.nav_toggle:focus,
+.nav_toggle:focus-visible {
+    outline: none;
+}
+
+.nav_toggle::-moz-focus-inner {
+    border: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 1rem;
+}
+
+#intro_container {
+    max-width: 725px;
+}
+
+#intro_content p {
+    color: #54595c;
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+#hero_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+
+#hero_content h1 {
+    margin-bottom: 0px;
+}
+
+#subhero_content {
+    font-size: 36px;
+}
+
+#tagline {
+    margin: 0px;
+    color: #1b1b1b;
+    font-weight: 300;
+}
+
+.works {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 2.5rem;
+}
+
+.work_text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.work_text p {
+    text-align: center;
+    color: #5e5e5e;
+    margin-top: 0px;
+}
+
+div.work_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+a.work_button {
+    display: inline-block;
+    padding: 0.9rem 2rem;
+    background-color: #e7835b;
+    color: #fff;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+a.work_button:hover {
+    background-color: #d9714a;
+}
+
+a.work_button:focus-visible {
+    outline: 3px solid #2f4f4f;
+    outline-offset: 2px;
+}
+
+.embed {
+    position: relative;
+    aspect-ratio: 20 / 10;
+}
+
+.embed iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.row {
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.reel_column {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.fullsize_text {
+    text-align: center;
+    align-self: center;
+    margin-top: 1.25rem;
+    margin-bottom: 3.5rem;
+}
+
+.fullsize_text h3 {
+    margin: 0 0 0.35rem;
+}
+
+.fullsize_text p {
+    margin: 0;
+    color: #5e5e5e;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+h1 {
+    color: #e7835b;
+    font-weight: 500;
+    font-size: 64px;
+}
+
+h2 {
+    display: flex;
+    justify-content: center;
+    font-family: 'Work Sans', sans-serif;
+    color: #2f4f4f;
+    font-weight: 500;
+    margin-bottom: 2rem;
+}
+
+h3 {
+    font-family: 'Source Sans 3', arial, sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.work_sans {
+    font-family: 'Work Sans', sans-serif;
+}
+
+.source_sans {
+    font-family: 'Source Sans 3', arial, sans-serif;
+}
+
+p {
+    font-family: 'Source Sans 3', arial, sans-serif;
+}
+
+#wonder_woman_redesigns_container p {
+    align-self: center;
+    max-width: 50%;
+}
+
+@media (min-width: 720px) {
+    .work {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        align-items: center;
+    }
+
+    .work:nth-child(even)> :first-child {
+        order: 2;
+    }
+}
